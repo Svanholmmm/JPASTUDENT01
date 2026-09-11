@@ -1,18 +1,24 @@
 package org.example.jpastudent01.config;
 
 import org.example.jpastudent01.model.Student;
+import org.example.jpastudent01.model.Unicode;
 import org.example.jpastudent01.repositories.StudentRepository;
+import org.example.jpastudent01.repositories.UnicodeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashSet;
+import java.util.Set;
+
 @Component
-public class initData  implements CommandLineRunner {
+public class initData implements CommandLineRunner {
     @Autowired
     StudentRepository studentRepository;
-
+    @Autowired
+    UnicodeRepository unicodeRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -28,5 +34,18 @@ public class initData  implements CommandLineRunner {
         s1.setName("Mads");
         studentRepository.save(s1);
         studentRepository.save(s2);
+
+        Set<Character> characters = new HashSet<>();
+        characters.add('A');
+        characters.add('B');
+        characters.add('C');
+
+      for (Character c : characters){
+          Unicode u = new Unicode();
+          u.setUnicode((int) c);
+          u.setSymbol(c);
+          u.setDescription("Character " + c);
+          unicodeRepository.save(u);
+        }
     }
 }
